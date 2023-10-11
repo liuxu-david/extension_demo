@@ -11,6 +11,7 @@ import prodConfig from './config/prod.config';
 })
 export class AppModule {}
 
+// 添加环境变量配置
 function setupModules(){
   const _configModule = ConfigModule.forRoot({
     isGlobal: true,
