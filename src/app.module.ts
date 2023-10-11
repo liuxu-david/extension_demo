@@ -4,9 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { isDev } from './utils/judge-env';
 import devConfig from './config/dev.config';
 import prodConfig from './config/prod.config';
+import { EzModule } from './modules/ezpro/server.module';
 
 @Module({
-  imports: [...setupModules()],
+  imports: [...setupModules(), EzModule],
   controllers: [AppController],
 })
 export class AppModule {}
