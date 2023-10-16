@@ -60,17 +60,18 @@ export class EzService {
         method: info.method,
         url: this.apiAuth.basicUrl + info.url,
         headers: {...this.basicHeaders, ...(info.headers || {})},
-        ...(info.options || {}),  // key: params || data
+        ...(info.options || {}), 
+        validateStatus: status => status
       });
       const content = res.data;
-      // this.logger.log(`[MUTATION] ${info.method} ${info.url} res:`, content);
+      this.logger.log(`[MUTATION] ${info.method} ${info.url} res:`, content);
       const {code, message, data} = content || {}
       if (code === 0) {
         return data;
       } else if (code === 401) {
         this.accessToken = await this.fetchAccessToken();
         this.basicHeaders["Authorization"] = `Bearer ${this.accessToken}`;
-        await this.mutation(info);
+        return await this.mutation(info);
       }
     } catch (err) {
       console.log(err.content,'err');
